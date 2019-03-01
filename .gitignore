@@ -1,0 +1,11 @@
+.idea/
+*.iml
+target/
+out/
+*.txt
+*.json
+src/resources/*.properties
+libs/
+*.md
+exportData/
+server/target/
