@@ -1,8 +1,8 @@
 package com.company.model;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,18 +23,26 @@ public class Project implements Serializable {
     @ManyToOne
     private User user;
 
+    @Column(name="date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
     private List<Task> listTasks;
 
-    public Project() {
+    {
         this.id = UUID.randomUUID().toString();
+        this.date = new Date();
+    }
+
+    public Project() {
+
     }
 
     public Project(String name, String description, User user) {
         this.name = name;
         this.description = description;
         this.user = user;
-        this.id = UUID.randomUUID().toString();
     }
 
     public String getId() {
@@ -59,6 +67,14 @@ public class Project implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public User getUser() {

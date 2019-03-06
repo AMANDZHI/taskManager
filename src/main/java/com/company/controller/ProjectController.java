@@ -2,13 +2,12 @@ package com.company.controller;
 
 import com.company.api.Service;
 import com.company.api.UserService;
-import com.company.dto.ProjectDTO;
 import com.company.model.Project;
 import com.company.model.User;
-import com.company.service.EntityServiceToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,94 +25,66 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public ModelAndView getProjects() {
-        ModelAndView modelAndView = new ModelAndView();
-        List<Project> list = projectService.getList();
-
-        List<ProjectDTO> forClientList = EntityServiceToDTO.getProjects(list);
-
-        modelAndView.addObject("list", forClientList);
-        modelAndView.setViewName("project");
-        return modelAndView;
-    }
-
-    @PostMapping("/createProject")
-    public ModelAndView createProject(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
+    @PostMapping("createProject")
+    public ModelAndView createProject(Model model, HttpServletRequest req) {
 
         String name = req.getParameter("name");
-        String descr = req.getParameter("descr");
+        String descr = req.getParameter("description");
         String login = req.getParameter("login");
-
-        Optional<User> findLogin = userService.findByLogin(login);
-        Project project = new Project(name, descr, findLogin.get());
+        Optional<User> optionalUser = userService.findByLogin(login);
+        if (!optionalUser.isPresent()){return new ModelAndView("redirect:/index");}
+        User user = optionalUser.get();
+        Project project = new Project(name, descr, user);
         projectService.save(project);
-
-        List<Project> list = projectService.getList();
-
-        List<ProjectDTO> forClientList = EntityServiceToDTO.getProjects(list);
-
-        modelAndView.addObject("list", forClientList);
-        modelAndView.setViewName("project");
-        return modelAndView;
+        return new ModelAndView("redirect:/projects");
     }
 
-    @PostMapping("/updateProject")
-    public ModelAndView updateProject(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
-
+    @GetMapping("/editProject")
+    public String getEdit(Model model, HttpServletRequest req) {
         String name = req.getParameter("name");
+        Optional<Project> optionalProject = projectService.findByName(name);
+        if (!optionalProject.isPresent()) {return "index";}
+        Project project = optionalProject.get();
+        model.addAttribute("project", project);
+        return "updateProject";
+    }
+
+    @PostMapping("/editProject")
+    public ModelAndView editProject(HttpServletRequest req) {
+        String oldName = req.getParameter("oldName");
         String newName = req.getParameter("newName");
-        String descr = req.getParameter("descr");
-        String login = req.getParameter("login");
-
-        Optional<User> findLogin = userService.findByLogin(login);
-        Project findProject = projectService.findByName(name).get();
-        User user = userService.findByLogin(login).get();
-        findProject.setName(newName);
-        findProject.setDescription(descr);
-        findProject.setUser(user);
-        projectService.update(findProject);
-
-        List<Project> list = projectService.getList();
-
-        List<ProjectDTO> forClientList = EntityServiceToDTO.getProjects(list);
-
-        modelAndView.addObject("list", forClientList);
-        modelAndView.setViewName("project");
-        return modelAndView;
+        String newDescr = req.getParameter("newDescr");
+        String newLogin = req.getParameter("newLogin");
+        Optional<User> optionalUser = userService.findByLogin(newLogin);
+        if (!optionalUser.isPresent()) {return new ModelAndView("redirect:/projects");}
+        User user = optionalUser.get();
+        if (oldName.isEmpty()) {
+            Project project = new Project(newName, newDescr, user);
+            projectService.save(project);
+            return new ModelAndView("redirect:/projects");
+        } else {
+            Optional<Project> optionalProject = projectService.findByName(oldName);
+            Project project = optionalProject.get();
+            project.setName(newName);
+            project.setDescription(newDescr);
+            project.setUser(user);
+            projectService.update(project);
+            return new ModelAndView("redirect:/projects");
+        }
     }
 
-    @PostMapping("/findProject")
-    public ModelAndView findProject(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        String name = req.getParameter("name");
-
-        Project findProject = projectService.findByName(name).get();
-
-        ProjectDTO projectDTO = EntityServiceToDTO.getProjectDTO(findProject);
-
-        modelAndView.addObject("project", projectDTO);
-        modelAndView.setViewName("findProject");
-        return modelAndView;
+    @GetMapping("/projects")
+    public String getList(Model model) {
+        System.out.println("зашел");
+        List<Project> projects = projectService.getList();
+        model.addAttribute("projects", projects);
+        return "projects";
     }
 
-    @PostMapping("/removeProject")
+    @GetMapping("/removeProject")
     public ModelAndView removeProject(HttpServletRequest req) {
-        ModelAndView modelAndView = new ModelAndView();
-
         String name = req.getParameter("name");
-
         projectService.removeByName(name);
-
-        List<Project> list = projectService.getList();
-
-        List<ProjectDTO> forClientList = EntityServiceToDTO.getProjects(list);
-
-        modelAndView.addObject("list", forClientList);
-        modelAndView.setViewName("project");
-        return modelAndView;
+        return new ModelAndView("redirect:/projects");
     }
 }

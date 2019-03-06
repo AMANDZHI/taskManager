@@ -43,7 +43,7 @@ public class Encryption {
     @SneakyThrows
     public static String encryptAes(String sessionId, String userId) {
         Properties property = new Properties();
-        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
+        FileInputStream fis = new FileInputStream("src/main/resources/config.properties");
         property.load(fis);
         String s = property.getProperty("aes.salt");
         byte[] iv = new byte[16];

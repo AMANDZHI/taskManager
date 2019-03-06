@@ -1,6 +1,9 @@
-package com.company;
+package com.company.util;
 
 import com.company.api.*;
+import com.company.dto.ProjectDTO;
+import com.company.dto.UserDTO;
+import com.company.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +30,7 @@ public class EndpointPublisher {
 
     @PostConstruct
     public void runEndpoint() {
+
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
         Endpoint.publish("http://localhost:1988/wss/user", userWebServiceEndpoint);

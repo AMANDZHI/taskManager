@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -31,17 +32,24 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    public User() {
-        this.role = UserRole.USER;
+    @Column(name="date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+    {
+        this.date = new Date();
         this.id = UUID.randomUUID().toString();
+        this.role = UserRole.USER;
+    }
+
+    public User() {
+
     }
 
     public User(String name, String login, String password) {
         this.name = name;
         this.login = login;
         this.password = Encryption.md5Custom(password);
-        this.id = UUID.randomUUID().toString();
-        this.role = UserRole.USER;
     }
 
     public User(String name, String login, String password, UserRole role) {

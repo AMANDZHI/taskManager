@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -33,15 +34,23 @@ public class Task implements Serializable {
     @ManyToOne
     private User user;
 
-    public Task() {
+    @Column(name="date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+    {
         this.id = UUID.randomUUID().toString();
+        this.date = new Date();
+    }
+
+    public Task() {
+
     }
 
     public Task(String name, String description, Project project, User user) {
         this.name = name;
         this.description = description;
         this.project = project;
-        this.id = UUID.randomUUID().toString();
         this.user = user;
     }
 }
