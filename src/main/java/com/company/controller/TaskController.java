@@ -43,8 +43,8 @@ public class TaskController {
         String login = req.getParameter("login");
         Optional<Project> optionalProject = projectService.findByName(nameProject);
         Optional<User> optionalUser = userService.findByLogin(login);
-        if (!optionalProject.isPresent()) {return new ModelAndView("redirect:/index");}
-        if (!optionalUser.isPresent()){return new ModelAndView("redirect:/index");}
+        if (!optionalProject.isPresent()) {return new ModelAndView("redirect:/tasks");}
+        if (!optionalUser.isPresent()){return new ModelAndView("redirect:/tasks");}
         Project project = optionalProject.get();
         User user = optionalUser.get();
         Task task = new Task(name, descr, project, user);
@@ -53,13 +53,17 @@ public class TaskController {
     }
 
     @GetMapping("/editTask")
-    public String getEdit(Model model, HttpServletRequest req) {
+    public ModelAndView getEdit(HttpServletRequest req) {
         String name = req.getParameter("name");
         Optional<Task> optionalTask = taskService.findByName(name);
-        if (!optionalTask.isPresent()) {return "index";}
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("updateTask");
+        if (!optionalTask.isPresent()) {
+            return modelAndView;
+        }
         Task task = optionalTask.get();
-        model.addAttribute("task", task);
-        return "updateTask";
+        modelAndView.addObject("task", task);
+        return modelAndView;
     }
 
     @PostMapping("/editTask")
@@ -100,7 +104,7 @@ public class TaskController {
     @GetMapping("/removeTask")
     public ModelAndView removeTask(HttpServletRequest req) {
         String name = req.getParameter("name");
-        taskService.removeByName(name);
+        taskService.removeById(name);
         return new ModelAndView("redirect:/tasks");
     }
 }

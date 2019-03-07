@@ -32,16 +32,26 @@ public class TaskServiceImpl implements Service<String, Task> {
     }
 
     @Override
+    public Optional<Task> findByNameAndUserId(String name, String userId) {
+        return Optional.empty();
+    }
+
+    @Override
     @SneakyThrows
     public Optional<Task> findById(String id) {
         return taskRepository.findById(id);
     }
 
     @Override
+    public Optional<Task> findByIdAndUserId(String id, String userId) {
+        return Optional.empty();
+    }
+
+    @Override
     @SneakyThrows
     @Transactional
     public Task update(Task object) {
-        Task task= taskRepository.save(object);
+        Task task = taskRepository.save(object);
         return task;
     }
 
@@ -54,8 +64,29 @@ public class TaskServiceImpl implements Service<String, Task> {
     }
 
     @Override
+    public boolean removeByNameAndUserId(String name, String userId) {
+        return false;
+    }
+
+    @Override
+    public void removeById(String id) {
+        taskRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean removeByIdAndUserId(String id, String userId) {
+        Integer answerDelete = taskRepository.deleteByIdAndUserId(id, userId);
+        return answerDelete > 0 ;
+    }
+
+    @Override
     @SneakyThrows
     public List<Task> getList() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> getListByUserId(String id) {
+        return taskRepository.findByUserId(id);
     }
 }

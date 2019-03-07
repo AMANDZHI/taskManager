@@ -31,6 +31,7 @@
       <th scope="col">Name</th>
       <th scope="col">Description</th>
       <th scope="col">Login</th>
+      <th scope="col">Date</th>
       <th scope="col">Remove</th>
       <th scope="col">Edit</th>
     </tr>
@@ -43,6 +44,7 @@
       <td>${p.name}</td>
       <td>${p.description}</td>
       <td>${p.getUser().getLogin()}</td>
+      <td>${p.date}</td>
       <td>
        <a class="btn btn-dark" href="removeProject?name=<c:out value="${p.name}"/>">REMOVE</a> 
         </td>

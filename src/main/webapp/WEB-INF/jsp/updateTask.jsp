@@ -12,13 +12,13 @@
   <div class="px-2">
    <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link" href="project">Project</a>
+    <a class="nav-link" href="/projects">Project</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="task">Task</a>
+    <a class="nav-link active" href="/tasks">Task</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="user">User</a>
+    <a class="nav-link" href="/users">User</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/logout">Logout</a>

@@ -11,5 +11,7 @@ public interface UserService {
     Optional<User> findByLogin(String login);
     Optional<User> findById(String id);
     boolean removeByLogin(String login);
+    void removeById(String id);
     List<User> getList();
+    List<User> getListByRole(String role);
 }

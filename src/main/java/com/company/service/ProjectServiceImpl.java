@@ -32,9 +32,19 @@ public class ProjectServiceImpl implements Service<String, Project> {
     }
 
     @Override
+    public Optional<Project> findByNameAndUserId(String name, String userId) {
+        return projectRepository.findByNameAndUserId(name, userId);
+    }
+
+    @Override
     @SneakyThrows
     public Optional<Project> findById(String id) {
         return projectRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Project> findByIdAndUserId(String id, String userId) {
+        return projectRepository.findByIdAndUserId(id, userId);
     }
 
     @Override
@@ -53,8 +63,33 @@ public class ProjectServiceImpl implements Service<String, Project> {
     }
 
     @Override
+    @Transactional
+    public boolean removeByNameAndUserId(String name, String userId) {
+        Integer answerDelete = projectRepository.deleteByNameAndUserId(name, userId);
+        return answerDelete > 0;
+    }
+
+    @Override
+    @Transactional
+    public void removeById(String id) {
+        projectRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public boolean removeByIdAndUserId(String id, String userId) {
+        Integer answerDelete = projectRepository.deleteByIdAndUserId(id, userId);
+        return answerDelete > 0;
+    }
+
+    @Override
     @SneakyThrows
     public List<Project> getList() {
         return projectRepository.findAll();
+    }
+
+    @Override
+    public List<Project> getListByUserId(String id) {
+        return projectRepository.findByUserId(id);
     }
 }

@@ -26,7 +26,7 @@ public class LoginController {
         String password = req.getParameter("password");
 
         Optional<User> optionalUser = userService.findByLogin(login);
-        if (!optionalUser.isPresent()) { return new ModelAndView("redirect:/index"); }
+        if (!optionalUser.isPresent()) { return new ModelAndView("redirect:/"); }
         User user = optionalUser.get();
         if (user.getPassword().equals(Encryption.md5Custom(password))) {
             HttpSession session = req.getSession();
@@ -39,12 +39,12 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest req) {
+    public ModelAndView logout(HttpServletRequest req) {
         HttpSession session = req.getSession();
         session.removeAttribute("login");
         session.removeAttribute("password");
         session.invalidate();
-        return "index";
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/registration")
@@ -54,7 +54,7 @@ public class LoginController {
         String password = req.getParameter("password");
 
         Optional<User> optionalUser = userService.findByLogin(login);
-        if (optionalUser.isPresent()) {return new ModelAndView("redirect:/index");}
+        if (optionalUser.isPresent()) {return new ModelAndView("redirect:/");}
         User newUser = new User(name, login, password);
         userService.save(newUser);
 

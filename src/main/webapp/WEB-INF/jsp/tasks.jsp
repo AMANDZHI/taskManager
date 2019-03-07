@@ -42,10 +42,10 @@
       <td>${t.description}</td>
       <td>${t.getProject().getName()}</td>
       <td>
-       <a class="btn btn-dark" href="removeTask?name=<c:out value="${t.name}"/>">REMOVE</a> 
+       <a class="btn btn-dark" href="removeTask?name=<c:out value="${t.id}"/>">REMOVE</a> 
         </td>
       <td>
-        <a class="btn btn-dark" href="editTask?name=<c:out value="${t.name}"/>">EDIT</a> 
+        <a class="btn btn-dark" href="editTask?name=<c:out value="${t.id}"/>">EDIT</a> 
       </td>
     </tr>
   </c:forEach>
