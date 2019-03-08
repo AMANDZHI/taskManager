@@ -13,5 +13,4 @@ public interface UserService {
     boolean removeByLogin(String login);
     void removeById(String id);
     List<User> getList();
-    List<User> getListByRole(String role);
 }

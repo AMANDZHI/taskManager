@@ -18,6 +18,7 @@ public class EntityServiceToDTO {
         projectDTO.setName(project.getName());
         projectDTO.setDescription(project.getDescription());
         projectDTO.setUserId(project.getUser().getId());
+        projectDTO.setDate(project.getDate().toString());
         return projectDTO;
     }
 
@@ -28,6 +29,7 @@ public class EntityServiceToDTO {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setProjectId(task.getProject().getId());
         taskDTO.setUserId(task.getUser().getId());
+        taskDTO.setDate(task.getDate().toString());
         return taskDTO;
     }
 
@@ -38,6 +40,7 @@ public class EntityServiceToDTO {
         userDTO.setLogin(user.getLogin());
         userDTO.setPassword(user.getPassword());
         userDTO.setRole(user.getRole().toString());
+        userDTO.setDate(user.getDate().toString());
         return userDTO;
     }
 

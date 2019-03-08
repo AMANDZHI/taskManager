@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.service;
 
 import com.company.api.*;
 import com.company.dto.ProjectDTO;
@@ -33,21 +33,8 @@ public class EndpointPublisher {
     @Autowired
     private SerializationWebServiceEndpoint serializationWebServiceEndpoint;
 
-    @Autowired
-    @Qualifier("projectService")
-    Service<String, Project> projectService;
-
-    @Autowired
-    UserService userService;
-
     @PostConstruct
     public void runEndpoint() {
-
-
-        projectService.removeByName("project");
-
-        List<Project> listByUserId = projectService.getList();
-        System.out.println(listByUserId.size());
 
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);

@@ -1,7 +1,6 @@
 package com.company.model;
 
-import com.company.util.Encryption;
-import com.company.util.UserRole;
+import com.company.service.Encryption;
 import lombok.Getter;
 import lombok.Setter;
 

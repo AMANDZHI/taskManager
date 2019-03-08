@@ -13,4 +13,6 @@ public class ProjectDTO {
     private String description;
 
     private String userId;
+
+    private String date;
 }

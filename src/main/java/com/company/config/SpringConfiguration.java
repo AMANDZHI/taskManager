@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = {"com.company.endpoint","com.company.model", "com.company.repository", "com.company.service", "com.company.util" })
+@ComponentScan(basePackages = {"com.company.endpoint","com.company.model", "com.company.repository", "com.company.service"})
 @PropertySource("classpath:config.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories("com.company.repository")

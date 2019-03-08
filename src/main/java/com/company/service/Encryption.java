@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.service;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.SneakyThrows;

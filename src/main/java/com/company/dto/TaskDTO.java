@@ -15,4 +15,6 @@ public class TaskDTO {
     private String projectId;
 
     private String userId;
+
+    private String date;
 }

@@ -2,7 +2,7 @@ package com.company.controller;
 
 import com.company.api.UserService;
 import com.company.model.User;
-import com.company.util.Encryption;
+import com.company.service.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

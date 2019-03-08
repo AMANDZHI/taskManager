@@ -2,12 +2,9 @@ package com.company.controller;
 
 import com.company.api.Service;
 import com.company.api.UserService;
-import com.company.dto.TaskDTO;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
-import com.company.service.EntityServiceToDTO;
-import com.company.util.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

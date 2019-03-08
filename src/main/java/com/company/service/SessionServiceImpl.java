@@ -4,7 +4,6 @@ import com.company.api.SessionService;
 import com.company.api.UserService;
 import com.company.model.Session;
 import com.company.model.User;
-import com.company.util.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

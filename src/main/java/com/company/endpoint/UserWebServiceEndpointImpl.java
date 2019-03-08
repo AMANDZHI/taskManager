@@ -3,13 +3,12 @@ package com.company.endpoint;
 import com.company.api.SessionService;
 import com.company.api.UserService;
 import com.company.api.UserWebServiceEndpoint;
-import com.company.dto.TaskDTO;
 import com.company.dto.UserDTO;
 import com.company.model.Session;
 import com.company.model.User;
 import com.company.service.EntityServiceToDTO;
-import com.company.util.Encryption;
-import com.company.util.UserRole;
+import com.company.service.Encryption;
+import com.company.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

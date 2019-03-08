@@ -1,4 +1,4 @@
-package com.company.util;
+package com.company.model;
 
 public enum UserRole {
     ADMIN, USER

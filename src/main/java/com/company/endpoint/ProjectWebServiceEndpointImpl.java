@@ -9,7 +9,7 @@ import com.company.model.Project;
 import com.company.model.Session;
 import com.company.model.User;
 import com.company.service.EntityServiceToDTO;
-import com.company.util.UserRole;
+import com.company.model.UserRole;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,30 +51,35 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @SneakyThrows
     @Override
     public ProjectDTO findByNameProject(String name, Session session ) {
+        Project project;
         if (!sessionService.checkSession(session)) {return null;}
-
-        Optional<Project> optionalProject = projectService.findByName(name);
-
-        if (!optionalProject.isPresent()) {return null;}
-        if (!optionalProject.get().getUser().getId().equals(session.getUserId()) && !userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {return null;}
-
-        Project project = optionalProject.get();
-
+        if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+            Optional<Project> optionalProject = projectService.findByName(name);
+            if (!optionalProject.isPresent()) {return null;}
+            project = optionalProject.get();
+        } else {
+            Optional<Project> optionalProject = projectService.findByNameAndUserId(name, session.getUserId());
+            if (!optionalProject.isPresent()) {return null;}
+            project = optionalProject.get();
+        }
         return EntityServiceToDTO.getProjectDTO(project);
     }
 
     @SneakyThrows
     @Override
     public ProjectDTO findByIdProject(String id, Session session) {
+        Project project;
         if (!sessionService.checkSession(session)) {return null;}
 
-        Optional<Project> optionalProject = projectService.findById(id);
-
-        if (!optionalProject.isPresent()) {return null;}
-        if (!optionalProject.get().getUser().getId().equals(session.getUserId()) && !userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {return null;}
-
-        Project project = optionalProject.get();
-
+        if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+            Optional<Project> optionalProject = projectService.findById(id);
+            if (!optionalProject.isPresent()) {return null;}
+            project = optionalProject.get();
+        } else {
+            Optional<Project> optionalProject = projectService.findByIdAndUserId(id, session.getUserId());
+            if (!optionalProject.isPresent()) {return null;}
+            project = optionalProject.get();
+        }
         return EntityServiceToDTO.getProjectDTO(project);
     }
 
@@ -106,12 +111,11 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     public boolean removeByNameProject(String name, Session session) {
         if (!sessionService.checkSession(session)) {return false;}
 
-        Optional<Project> optionalProject = projectService.findByName(name);
-
-        if (!optionalProject.isPresent()) {return false;}
-        if (!optionalProject.get().getUser().getId().equals(session.getUserId()) || !userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {return false;}
-
-        return projectService.removeByName(name);
+        if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+           return projectService.removeByName(name);
+        } else {
+            return projectService.removeByNameAndUserId(name, session.getUserId());
+        }
     }
 
     @SneakyThrows
@@ -121,13 +125,16 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
 
         List<ProjectDTO> forClientList = new ArrayList<>();
         User userSession = userService.findById(session.getUserId()).get();
-        List<Project> list = projectService.getList();
+        List<Project> list;
+
+        if (userSession.getRole().equals(UserRole.ADMIN)) {
+            list = projectService.getList();
+        } else {
+            list = projectService.getListByUserId(session.getUserId());
+        }
 
         for (Project project: list) {
-            User userProject = project.getUser();
-            if (userProject.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
-                forClientList.add(EntityServiceToDTO.getProjectDTO(project));
-            }
+            forClientList.add(EntityServiceToDTO.getProjectDTO(project));
         }
 
         return forClientList;
