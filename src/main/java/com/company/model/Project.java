@@ -2,6 +2,7 @@ package com.company.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;

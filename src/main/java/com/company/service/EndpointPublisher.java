@@ -33,8 +33,24 @@ public class EndpointPublisher {
     @Autowired
     private SerializationWebServiceEndpoint serializationWebServiceEndpoint;
 
+    @Autowired
+    @Qualifier("projectService")
+    private Service<String, Project> projectService;
+
+    @Autowired
+    private UserService userService;
+
     @PostConstruct
     public void runEndpoint() {
+        Optional<User> admin = userService.findByLogin("admin");
+
+        Project project = new Project("project", "pr", admin.get());
+        Project project1 = new Project("project1", "pr", admin.get());
+        Project project2 = new Project("project2", "pr", admin.get());
+        Project project3 = new Project("project3", "pr", admin.get());
+        projectService.save(project);
+        projectService.save(project1);
+        projectService.save(project2);
 
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);

@@ -24,6 +24,23 @@
     <a class="nav-link" href="/logout">Logout</a>
   </li>
 </ul>
+<form action="/sortProjects" method="post">
+  <div class="form-group">
+            <p>
+                <label for="date">Дата начала: </label>
+                <input class="form-control" type="date" id="date" name="dateStart"/>
+            </p>
+          </div>
+          <div class="form-group">
+            <p>
+                <label for="date">Дата конца: </label>
+                <input class="form-control" type="date" id="date" name="dateEnd"/>
+            </p>
+          </div>
+            <p>
+                <button type="submit" class="btn btn-dark">Отправить</button>
+            </p>
+        </form>
 	<table class="table table-dark">
   <thead>
     <tr>
