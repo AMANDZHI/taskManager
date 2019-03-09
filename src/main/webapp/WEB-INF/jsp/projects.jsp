@@ -24,17 +24,17 @@
     <a class="nav-link" href="/logout">Logout</a>
   </li>
 </ul>
-<form action="/sortProjects" method="post">
+<form action="/sort" method="get">
   <div class="form-group">
             <p>
-                <label for="date">Дата начала: </label>
-                <input class="form-control" type="date" id="date" name="dateStart"/>
+                <label for="dateStart">Дата начала: </label>
+                <input class="form-control" type="date" id="dateStart" name="start"/>
             </p>
           </div>
           <div class="form-group">
             <p>
                 <label for="date">Дата конца: </label>
-                <input class="form-control" type="date" id="date" name="dateEnd"/>
+                <input class="form-control" type="date" id="date" name="end"/>
             </p>
           </div>
             <p>

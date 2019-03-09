@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +78,6 @@ public class ProjectController {
 
     @GetMapping("/projects")
     public String getList(Model model) {
-        System.out.println("зашел");
         List<Project> projects = projectService.getList();
         model.addAttribute("projects", projects);
         return "projects";
@@ -86,5 +88,19 @@ public class ProjectController {
         String name = req.getParameter("name");
         projectService.removeByName(name);
         return new ModelAndView("redirect:/projects");
+    }
+
+    @GetMapping("/sort")
+    public String getListByDate(HttpServletRequest req, Model model) throws ParseException {
+        String start = req.getParameter("start");
+        String end = req.getParameter("end");
+        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
+        Date startDate = formatter.parse(start);
+        Date endDate = formatter.parse(end);
+
+        List<Project> projects = projectService.getListByDate(startDate, endDate);
+        System.out.println(projects.size());
+        model.addAttribute("projects", projects);
+        return "projects";
     }
 }

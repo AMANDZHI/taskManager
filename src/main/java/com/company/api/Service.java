@@ -1,5 +1,6 @@
 package com.company.api;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +17,5 @@ public interface Service<T, M> {
     boolean removeByIdAndUserId(T id, T userId);
     List<M> getList();
     List<M> getListByUserId(T id);
+    List<M> getListByDate(Date startDate, Date endDate);
 }

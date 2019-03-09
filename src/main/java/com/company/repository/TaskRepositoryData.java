@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,4 +28,7 @@ public interface TaskRepositoryData extends JpaRepository<Task, String> {
     @Query("Delete from Task t Where t.id = :id AND t.user.id = :userId")
     @Modifying
     Integer deleteByIdAndUserId(@Param("id")String id, @Param("userId")String userId);
+
+    @Query("Select t from Task t where date >= :startDate AND date <= :endDate")
+    List<Task> findByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

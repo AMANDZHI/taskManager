@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,4 +28,7 @@ public interface ProjectRepositoryData extends JpaRepository<Project, String> {
     @Query("Delete from Project p Where p.id = :id AND p.user.id = :userId")
     @Modifying
     Integer deleteByIdAndUserId(@Param("id")String id, @Param("userId")String userId);
+
+    @Query("Select p from Project p where date >= :startDate AND date <= :endDate")
+    List<Project> findByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

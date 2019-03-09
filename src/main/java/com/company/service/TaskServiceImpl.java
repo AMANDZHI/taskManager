@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,5 +89,10 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     public List<Task> getListByUserId(String id) {
         return taskRepository.findByUserId(id);
+    }
+
+    @Override
+    public List<Task> getListByDate(Date startDate, Date endDate) {
+        return null;
     }
 }
