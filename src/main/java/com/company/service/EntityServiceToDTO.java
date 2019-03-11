@@ -7,18 +7,22 @@ import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EntityServiceToDTO {
 
     public static ProjectDTO getProjectDTO(Project project) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setId(project.getId());
         projectDTO.setName(project.getName());
         projectDTO.setDescription(project.getDescription());
         projectDTO.setUserId(project.getUser().getId());
-        projectDTO.setDate(project.getDate().toString());
+        projectDTO.setDate(simpleDateFormat.format(project.getDate()));
+        projectDTO.setUserLogin(project.getUser().getLogin());
         return projectDTO;
     }
 

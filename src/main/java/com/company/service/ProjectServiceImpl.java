@@ -66,8 +66,12 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @Transactional
     public boolean removeByNameAndUserId(String name, String userId) {
-        Integer answerDelete = projectRepository.deleteByNameAndUserId(name, userId);
-        return answerDelete > 0;
+        Optional<Project> findProject = projectRepository.findByName(name);
+        if (!findProject.isPresent()) { return false; }
+        if (!findProject.get().getUser().getId().equals(userId)) {return false;}
+
+        projectRepository.delete(findProject.get());
+        return true;
     }
 
     @Override
@@ -79,8 +83,12 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @Transactional
     public boolean removeByIdAndUserId(String id, String userId) {
-        Integer answerDelete = projectRepository.deleteByIdAndUserId(id, userId);
-        return answerDelete > 0;
+        Optional<Project> findProject = projectRepository.findById(id);
+        if (!findProject.isPresent()) { return false; }
+        if (!findProject.get().getUser().getId().equals(userId)) {return false;}
+
+        projectRepository.delete(findProject.get());
+        return true;
     }
 
     @Override

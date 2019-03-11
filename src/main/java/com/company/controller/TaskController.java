@@ -93,6 +93,7 @@ public class TaskController {
     @GetMapping("/tasks")
     public String getList(Model model) {
         List<Task> tasks = taskService.getList();
+        System.out.println(tasks.size());
         model.addAttribute("tasks", tasks);
         return "tasks";
     }

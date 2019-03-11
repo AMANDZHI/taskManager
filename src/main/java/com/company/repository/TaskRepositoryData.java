@@ -21,14 +21,6 @@ public interface TaskRepositoryData extends JpaRepository<Task, String> {
     @Query("Select t from Task t Where t.name = :name AND t.user.id = :userId")
     Optional<Task> findByNameAndUserId(@Param("name")String name, @Param("userId")String userId);
 
-    @Query("Delete from Task t Where t.name = :name AND t.user.id = :userId")
-    @Modifying
-    Integer deleteByNameAndUserId(@Param("name")String name, @Param("userId")String userId);
-
-    @Query("Delete from Task t Where t.id = :id AND t.user.id = :userId")
-    @Modifying
-    Integer deleteByIdAndUserId(@Param("id")String id, @Param("userId")String userId);
-
     @Query("Select t from Task t where date >= :startDate AND date <= :endDate")
     List<Task> findByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

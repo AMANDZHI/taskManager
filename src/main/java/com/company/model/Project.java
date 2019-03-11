@@ -2,7 +2,6 @@ package com.company.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +28,7 @@ public class Project implements Serializable {
     private Date date;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
+    @Transient
     private List<Task> listTasks;
 
     {

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

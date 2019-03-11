@@ -66,7 +66,11 @@ public class TaskServiceImpl implements Service<String, Task> {
 
     @Override
     public boolean removeByNameAndUserId(String name, String userId) {
-        return false;
+        Optional<Task> findTask = taskRepository.findByName(name);
+        if (!findTask.isPresent()) {return false;}
+        if (!findTask.get().getUser().getId().equals(userId)) {return false;}
+        taskRepository.delete(findTask.get());
+        return true;
     }
 
     @Override
@@ -76,8 +80,11 @@ public class TaskServiceImpl implements Service<String, Task> {
 
     @Override
     public boolean removeByIdAndUserId(String id, String userId) {
-        Integer answerDelete = taskRepository.deleteByIdAndUserId(id, userId);
-        return answerDelete > 0 ;
+        Optional<Task> findTask = taskRepository.findById(id);
+        if (!findTask.isPresent()) {return false;}
+        if (!findTask.get().getUser().getId().equals(userId)) {return false;}
+        taskRepository.delete(findTask.get());
+        return true;
     }
 
     @Override
