@@ -1,6 +1,5 @@
 package com.company.config;
 
-import com.company.filters.SessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,16 +32,16 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    @Bean
-    public SessionManager getSessionManager() {
-        return new SessionManager();
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getSessionManager())
-                .addPathPatterns("/projects", "/tasks", "/users");
-        // assuming you put your serve your static files with /resources/ mapping
-        // and the pre login page is served with /login mapping
-    }
+//    @Bean
+//    public SessionManager getSessionManager() {
+//        return new SessionManager();
+//    }
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(getSessionManager())
+//                .addPathPatterns("/projects", "/tasks", "/users");
+//        // assuming you put your serve your static files with /resources/ mapping
+//        // and the pre login page is served with /login mapping
+//    }
 }
