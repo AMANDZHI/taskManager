@@ -7,6 +7,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -35,12 +36,11 @@ public class Task implements Serializable {
     private User user;
 
     @Column(name="date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private LocalDateTime date;
 
     {
         this.id = UUID.randomUUID().toString();
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     public Task() {

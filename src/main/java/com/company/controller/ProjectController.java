@@ -2,14 +2,21 @@ package com.company.controller;
 
 import com.company.api.Service;
 import com.company.api.UserService;
+import com.company.dto.ProjectDTO;
 import com.company.model.Project;
+import com.company.model.User;
+import com.company.service.EntityServiceToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,37 +98,42 @@ public class ProjectController {
 //        return projectDTO;
 //    }
 
-    @GetMapping(value = "/projects", produces = { MediaType.APPLICATION_JSON_VALUE})
-    public List getList(Model model) {
+    @GetMapping(value = "/projects", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<ProjectDTO> getList() {
         List<Project> projects = projectService.getList();
-        System.out.println(projects.size() + "test");
-        return projects;
+        List<ProjectDTO> dtoProjects = EntityServiceToDTO.getProjects(projects);
+        return dtoProjects;
     }
 
-    @RequestMapping(value = "/project/update/{id}", produces = { MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST)
-    public Project updateProject(@PathVariable("id") String id, @ModelAttribute("project") Project updateProject) {
+    @PostMapping(value = "/project/update/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ProjectDTO> updateProject(@PathVariable("id") String id, @ModelAttribute("project") Project updateProject) {
         Optional<Project> findProject = projectService.findById(id);
-        System.out.println("update : " + id);
         Project project = findProject.get();
-        System.out.println(updateProject.getDescription() + " : " + "client");
-        System.out.println(updateProject.getId() + " : " + "client");
-        System.out.println(updateProject.getName() + " : " + "client");
-        System.out.println(project.getDescription() +" : "  + project.getName());
+        System.out.println(project.getDescription() + " : " + project.getName());
         project.setName(updateProject.getName());
         project.setDescription(updateProject.getDescription());
         projectService.update(project);
-        return project;
+        return new ResponseEntity<ProjectDTO>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "project/add", produces = {MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.POST)
-    public Project addProject(@RequestBody Project addProject) {
-//        @ModelAttribute("project") Project addProject
+    @PostMapping(value = "project/add", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<ProjectDTO> addProject(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("userLogin") String userLogin, @RequestParam("date") String date) throws ParseException {
+        Optional<User> findUser = userService.findByLogin(userLogin);
+        System.out.println(date);
         Project project = new Project();
-        project.setName(addProject.getName());
-        project.setDescription(addProject.getDescription());
+        project.setName(name);
+        project.setDescription(description);
+        project.setUser(findUser.get());
+        LocalDateTime localDateTime = LocalDateTime.parse(date);
+        project.setDate(localDateTime);
         projectService.save(project);
-        System.out.println(project.getName());
-        return project;
+        return new ResponseEntity<ProjectDTO>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/project/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Project> deleteProject(@RequestParam("id") String id) {
+        projectService.removeById(id);
+        return new ResponseEntity<Project>(HttpStatus.OK);
     }
 
 //    @RequestMapping(value = "/project/update/{id}", produces = { MediaType.APPLICATION_JSON_VALUE}, method = RequestMethod.GET)

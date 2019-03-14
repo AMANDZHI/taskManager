@@ -2,6 +2,7 @@ package com.company.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +25,7 @@ public class Project implements Serializable {
     private User user;
 
     @Column(name="date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private LocalDateTime date;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
     @Transient
@@ -33,7 +33,7 @@ public class Project implements Serializable {
 
     {
         this.id = UUID.randomUUID().toString();
-        this.date = new Date();
+        this.date = LocalDateTime.now();
     }
 
     public Project() {
@@ -70,11 +70,11 @@ public class Project implements Serializable {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
