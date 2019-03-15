@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -32,11 +33,10 @@ public class User implements Serializable {
     private UserRole role;
 
     @Column(name="date", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private LocalDateTime date;
 
     {
-        this.date = new Date();
+        this.date = LocalDateTime.now();
         this.id = UUID.randomUUID().toString();
         this.role = UserRole.USER;
     }

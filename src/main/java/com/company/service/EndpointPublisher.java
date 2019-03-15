@@ -56,9 +56,13 @@ public class EndpointPublisher {
 //        projectService.save(project);
 //        projectService.save(project1);
 //        projectService.save(project2);
-//        Optional<Project> project = projectService.findByName("ppp");
+//        Optional<Project> project = projectService.findByName("project5");
 //        Task task = new Task("task7", "task7", project.get(), admin.get());
+//        Task task2 = new Task("task6", "task6", project.get(), admin.get());
+//        Task task3 = new Task("task5", "task5", project.get(), admin.get());
 //        taskService.save(task);
+//        taskService.save(task2);
+//        taskService.save(task3);
 
 //        SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String end = "2019-03-09 20:08:25";

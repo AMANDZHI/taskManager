@@ -33,6 +33,8 @@ public class EntityServiceToDTO {
         taskDTO.setProjectId(task.getProject().getId());
         taskDTO.setUserId(task.getUser().getId());
         taskDTO.setDate(task.getDate().toString());
+        taskDTO.setProjectName(task.getProject().getName());
+        taskDTO.setUserLogin(task.getUser().getLogin());
         return taskDTO;
     }
 

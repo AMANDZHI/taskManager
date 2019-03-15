@@ -14,7 +14,11 @@ public class TaskDTO {
 
     private String projectId;
 
+    private String projectName;
+
     private String userId;
+
+    private String userLogin;
 
     private String date;
 }

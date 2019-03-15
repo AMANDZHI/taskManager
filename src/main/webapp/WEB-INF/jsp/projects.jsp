@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="px-2">
-  <ul class="nav nav-tabs">
+<ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" href="#">Project</a>
   </li>
