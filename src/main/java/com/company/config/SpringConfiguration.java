@@ -1,5 +1,8 @@
 package com.company.config;
 
+import com.company.endpoint.*;
+import org.apache.cxf.bus.spring.SpringBus;
+import org.apache.cxf.jaxws.EndpointImpl;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import javax.xml.ws.Endpoint;
 import java.util.Properties;
 
 @Configuration
@@ -79,4 +83,43 @@ public class SpringConfiguration {
         return properties;
     }
 
+//    @Bean
+//    public SpringBus springBus() {
+//        return new SpringBus();
+//    }
+//
+//    @Bean
+//    public Endpoint endpointProject() {
+//        EndpointImpl endpoint = new EndpointImpl(springBus(), new ProjectWebServiceEndpointImpl());
+//        endpoint.publish("http://localhost:1987/wss/project");
+//        return endpoint;
+//    }
+//
+//    @Bean
+//    public Endpoint endpointTask() {
+//        EndpointImpl endpoint = new EndpointImpl(springBus(), new TaskWebServiceEndpointImpl());
+//        endpoint.publish("http://localhost:1987/wss/task");
+//        return endpoint;
+//    }
+//
+//    @Bean
+//    public Endpoint endpointUser() {
+//        EndpointImpl endpoint = new EndpointImpl(springBus(), new UserWebServiceEndpointImpl());
+//        endpoint.publish("http://localhost:1987/wss/user");
+//        return endpoint;
+//    }
+//
+//    @Bean
+//    public Endpoint endpointSession() {
+//        EndpointImpl endpoint = new EndpointImpl(springBus(), new SessionWebServiceEndpointImpl());
+//        endpoint.publish("http://localhost:1987/wss/session");
+//        return endpoint;
+//    }
+//
+//    @Bean
+//    public Endpoint endpointSerialization() {
+//        EndpointImpl endpoint = new EndpointImpl(springBus(), new SerializationWebServiceEndpointImpl());
+//        endpoint.publish("http://localhost:1987/wss/serialization");
+//        return endpoint;
+//    }
 }

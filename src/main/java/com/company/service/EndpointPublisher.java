@@ -74,10 +74,10 @@ public class EndpointPublisher {
 //        List<Project> listByDate = projectService.getListByDate(startDate, endDate);
 //        System.out.println(listByDate.size());
 ////
-//        Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
-//        Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
-//        Endpoint.publish("http://localhost:1988/wss/user", userWebServiceEndpoint);
-//        Endpoint.publish("http://localhost:1989/wss/session", sessionWebServiceEndpoint);
-//        Endpoint.publish("http://localhost:1990/wss/serialization", serializationWebServiceEndpoint);
+        Endpoint.publish("http://localhost:1987/wss/project", projectServiceEndpoint);
+        Endpoint.publish("http://localhost:1987/wss/user", userWebServiceEndpoint);
+        Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
+        Endpoint.publish("http://localhost:1987/wss/session", sessionWebServiceEndpoint);
+        Endpoint.publish("http://localhost:1987/wss/serialization", serializationWebServiceEndpoint);
     }
 }
